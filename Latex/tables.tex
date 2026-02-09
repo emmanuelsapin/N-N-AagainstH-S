@@ -1,0 +1,26 @@
+\documentclass[preview]{standalone}
+\usepackage{booktabs}   % For professional table lines (\hline, \toprule)
+\usepackage{multirow}   % Required to merge cells vertically (Individual j)
+\usepackage{amsmath}    % For math symbols like \hat{\pi}
+
+\begin{document}
+
+% --- 2x2 SHARING MATRIX TEMPLATE ---
+% This matrix maps the sharing between the two phased parental homologues 
+% of Individual i and Individual j. 
+% The ordering is normalized so that the Maximum sharing is at (1,1).
+\begin{table}[!htb]
+\renewcommand{\arraystretch}{1.3} % Adds vertical padding for readability
+\centering
+\begin{tabular}{c c | c c}
+    & & \multicolumn{2}{c}{\textbf{Individual $i$}} \\
+    & & $p_1$ & $p_2$ \\
+    \hline 
+    \multirow{2}{*}{\textbf{Individual $j$}} 
+      & $p_1$ & $\hat{\pi}^{\text{hh}}_{\text{Max}}$   & $\hat{\pi}^{\text{hh}}_{\text{R\_Max}}$ \\
+      & $p_2$ & $\hat{\pi}^{\text{hh}}_{\text{R\_Min}}$ & $\hat{\pi}^{\text{hh}}_{\text{Opp}}$    \\
+\end{tabular}
+\end{table}
+% Max = Maximum share, R_Max = Row Maximum, R_Min = Row Minimum, Opp = Opposite cell.
+
+\end{document}
