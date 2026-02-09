@@ -9,7 +9,17 @@ Pipeline for predicting **Half-Sib (H-S)** vs **Not Applicable (N/A)** pairs fro
 
 ## Contents
 
+### R code
+
 - **`GTNAall2.R`** — Main R script: data read/merge, filtering, univariate GMMs, supervised classifier (4-D + calibration), multivariate 2-component Gaussian mixture (4-D) → P(H-S), cutoff choice, plots, and output table.
+
+### LaTeX (methods and figures)
+
+- **`equations.tex`** — The 4-D multivariate GMM and EM-step formulas.
+- **`tables.tex`** — Formatted matrices for second- and third-degree relationship expectations.
+- **`figures.tex`** — TikZ/PGF plots for the structural validation pedigree trees.
+
+Compile with `pdflatex` (and optionally `bibtex` if references are used). The TikZ/PGF figures require the `tikz` and `pgf` packages.
 
 ## Usage
 
