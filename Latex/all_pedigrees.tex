@@ -1,0 +1,140 @@
+\documentclass[preview]{standalone}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usetikzlibrary{arrows,positioning}
+
+\begin{document}
+
+% --- GLOBAL TIKZ STYLING ---
+% Standardizing shapes and line styles for consistent genomic pedigree charts.
+\tikzset{
+    male/.style={rectangle, draw, minimum size=7mm},
+    female/.style={circle, draw, minimum size=7mm},
+    solidNode/.style={draw, very thick}, % Used for the primary relative pair
+    dashedNode/.style={draw, dashed},    % Used for ancestors/unobserved relatives
+    allLine/.style={dashed, line width=0.6pt} % Standard pedigree connection style
+}
+
+% --- FIGURE 1: NIECE/NEPHEW-AVUNCULAR (GT) ---
+% Illustrates the ground-truth labeling configuration.
+% N is the niece/nephew, A is the avuncular relative.
+\section*{Figure 1: Niece/Nephew-Avuncular Configuration}
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small, inner sep=2pt}]
+    % Generation 1 (Grandparents of N)
+    \coordinate (sibMB)  at (0,4);
+    \coordinate (sibSMB) at (2,4);
+    \draw[allLine] (sibMB) -- (sibSMB);
+    \node[female,dashedNode] (MB)  at (0,3)  {}; 
+    \node[female,dashedNode] (SMB) at (2,3)  {}; 
+    \draw[allLine] (sibMB)  -- (MB.north);
+    \draw[allLine] (sibSMB) -- (SMB.north);
+    
+    % Parents of N (Mother/Father)
+    \node[male,dashedNode] (FB) at (-2,3) {};
+    \draw[allLine] (FB.east) -- (MB.west);
+    \coordinate (U_MBFB) at (-1,3);
+    
+    % Generation 2 (Siblings: Parent of N and Avuncular A)
+    \coordinate (sibMA) at (-3,2.5);
+    \coordinate (sibSM) at (-1,2.5);
+    \coordinate (sibA)  at ( 2,2.5);
+    \draw[allLine] (sibMA) -- (sibA);
+    \node[female,dashedNode] (MA) at (-3,1.5) {}; 
+    \node[female,dashedNode] (SM) at (-1,1.5) {}; 
+    \node[female,solidNode]  (A)  at ( 2,1.5) {A}; 
+    
+    \draw[allLine] (U_MBFB) -- (sibSM);
+    \draw[allLine] (sibMA)  -- (MA.north);
+    \draw[allLine] (sibSM)  -- (SM.north);
+    \draw[allLine] (sibA)   -- (A.north);
+    
+    % Generation 3 (The relative pair and their cousins)
+    \node[male,solidNode]   (CN) at (-4,0.5) {CN}; % Cousin of Niece
+    \node[female,solidNode] (N)  at ( 0,0.5) {N};  % Niece/Nephew
+    \node[male,solidNode]   (CB) at ( 3.5,1.5) {CA}; % Cousin of Avuncular
+    \draw[allLine] (-4,1.0) -- (CN.north);
+    \draw[allLine] ( 0,1.0) -- (N.north);
+    \draw[allLine] ( 3.5,2.0) -- (CB.north);
+\end{tikzpicture}
+
+\vspace{2cm}
+
+% --- FIGURE 2: SHARED FIRST COUSIN (H-S VALIDATION) ---
+% Used to identify H-S pairs in the absence of genotyped parents.
+% Logical proof: CFC sharing is only compatible with H-S, not N/N-A.
+\section*{Figure 2: Shared First Cousin Configuration}
+\begin{tikzpicture}[x=1.4cm, y=1.2cm, every node/.style={font=\small, inner sep=2pt}]
+    % Maternal Grandparents
+    \node[male,dashedNode]   (GP1) at (5,5.5) {};
+    \node[female,dashedNode] (GP2) at (6,5.5) {};
+    \draw[allLine] (GP1.east) -- (GP2.west);
+    \coordinate (GPmid) at (5.5,5.5);
+    \coordinate (MidDrop) at (5.5,4.2);
+    \draw[allLine] (GPmid) -- (MidDrop);
+    
+    % Mothers (Siblings)
+    \draw[allLine] (4.5,4.2) -- (6.5,4.2); 
+    \node[female,dashedNode] (M)    at (4.5,3.4) {};
+    \node[female,dashedNode] (AUNT) at (6.5,3.4) {};
+    \draw[allLine] (4.5,4.2) -- (M.north);
+    \draw[allLine] (6.5,4.2) -- (AUNT.north);
+    
+    % Fathers of Half-Siblings (Distinct individuals)
+    \node[male,dashedNode]   (FH-S1) at (3.5,3.4) {};
+    \node[male,dashedNode]   (FH-S2) at (5.5,3.4) {};
+    \node[male,dashedNode]   (FCFC) at (7.5,3.4) {};
+    
+    % Unions and Drops to H-S1, H-S2, and CFC
+    \draw[allLine] (3.5,2.8) -- (4.5,2.8);
+    \draw[allLine] (FH-S1.south) -- (3.5,2.8);
+    \draw[allLine] (M.south)     -- (4.5,2.8);
+    \draw[allLine] (4.5,2.8) -- (5.5,2.8);
+    \draw[allLine] (FH-S2.south) -- (5.5,2.8);
+    \draw[allLine] (6.5,2.8) -- (7.5,2.8);
+    \draw[allLine] (AUNT.south) -- (6.5,2.8);
+    \draw[allLine] (FCFC.south) -- (7.5,2.8);
+    
+    \node[female,solidNode] (H-S1) at (4.0,1.8) {H-S$_1$};
+    \node[female,solidNode] (H-S2) at (5.0,1.8) {H-S$_2$};
+    \node[female,solidNode] (CFC) at (7.0,1.8) {CFC};
+    \draw[allLine] (4.0,2.8) -- (H-S1.north);
+    \draw[allLine] (5.0,2.8) -- (H-S2.north);
+    \draw[allLine] (7.0,2.8) -- (CFC.north);
+\end{tikzpicture}
+
+\vspace{2cm}
+
+% --- FIGURE 3: UNRELATED FIRST COUSINS ---
+% Further structural validation for H-S identification.
+% If FC1 and FC2 are unrelated to the opposite sibling, they cannot be N/N-A.
+\section*{Figure 3: Unrelated First Cousins Configuration}
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+    % Paternal ancestors of both sides
+    \node[female,dashedNode] (P1)  at (-6,3) {};
+    \node[male,dashedNode]   (F1c) at (-4,3) {};
+    \node[male,dashedNode]   (F1)  at (-2,3) {};
+    \node[female,dashedNode] (M)   at ( 0,3) {}; % Shared Mother
+    \node[male,dashedNode]   (F2)  at ( 2,3) {};
+    \node[male,dashedNode]   (F2c) at ( 4,3) {};
+    \node[female,dashedNode] (P2)  at ( 6,3) {};
+    
+    % Sibling bars (establishing cousin relations)
+    \draw[allLine] (-4,3.6) -- (-2,3.6);
+    \draw[allLine] ( 2,3.6) -- ( 4,3.6);
+    
+    % The final generation
+    \node[male,solidNode]   (FC1) at (-5,1.5) {FC$_1$};
+    \node[female,solidNode] (H-S1) at (-1,1.5) {H-S$_1$};
+    \node[female,solidNode] (H-S2) at ( 1,1.5) {H-S$_2$};
+    \node[male,solidNode]   (FC2) at ( 5,1.5) {FC$_2$};
+    
+    % Connection drops
+    \draw[allLine] (-5,3) -- (FC1.north);
+    \draw[allLine] (-1,3) -- (H-S1.north);
+    \draw[allLine] ( 1,3) -- (H-S2.north);
+    \draw[allLine] ( 5,3) -- (FC2.north);
+\end{tikzpicture}
+
+\end{document}
