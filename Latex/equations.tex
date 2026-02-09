@@ -1,0 +1,27 @@
+\documentclass[preview]{standalone}
+\usepackage{amsmath}
+\usepackage{bm} % For bold math symbols (vectors and matrices)
+
+\begin{document}
+
+% --- SECTION: JOINT DENSITY MODEL ---
+% This equation represents the mixture of two multivariate normal distributions.
+% Component 1 (\mu_1, \Sigma_1) typically represents the H-S class.
+% Component 2 (\mu_2, \Sigma_2) typically represents the N/N-A class.
+\section*{1. Joint Density Model for 4-D Feature Vectors}
+\begin{equation}
+f(\mathbf{x} | \boldsymbol{\Theta}) = \pi \mathcal{N}(\mathbf{x} | \boldsymbol{\mu}_1, \boldsymbol{\Sigma}_1) + (1 - \pi) \mathcal{N}(\mathbf{x} | \boldsymbol{\mu}_2, \boldsymbol{\Sigma}_2)
+\end{equation}
+% \pi is the mixing proportion (weight) of the first component.
+
+% --- SECTION: CLASSIFICATION METRIC ---
+% This utilizes the Bayes' theorem logic to calculate the posterior probability.
+% It identifies the probability that a specific pair belongs to the H-S group 
+% given their observed haplotype sharing (vector x).
+\section*{2. Posterior Probability for H-S Classification}
+\begin{equation}
+P(\text{H-S} | \mathbf{x}) = \frac{\pi \phi(\mathbf{x} | \bm{\mu}_{\text{H-S}}, \bm{\Sigma}_{\text{H-S}})}{\pi \phi(\mathbf{x} | \bm{\mu}_{\text{H-S}}, \bm{\Sigma}_{\text{H-S}}) + (1-\pi) \phi(\mathbf{x} | \bm{\mu}_{\text{N/N-A}}, \bm{\Sigma}_{\text{N/N-A}})}
+\end{equation}
+% \phi denotes the probability density function (PDF) of the multivariate normal.
+
+\end{document}
