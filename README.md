@@ -2,6 +2,11 @@
 
 Pipeline for predicting **Half-Sib (H-S)** vs **Not Applicable (N/A)** pairs from genotype/π̂ (pi-hat) features.
 
+## Code and data availability
+
+- **R code:** The analysis code in this repository is freely available for use and modification.
+- **Data:** The data used in the original analyses **cannot be made available online** because of [UK Biobank](https://www.ukbiobank.ac.uk/) access restrictions. Researchers who wish to reproduce or extend the analysis must obtain the required data and approvals through UK Biobank’s application process.
+
 ## Contents
 
 - **`GTNAall2.R`** — Main R script: data read/merge, filtering, univariate GMMs, supervised classifier (4-D + calibration), multivariate 2-component Gaussian mixture (4-D) → P(H-S), cutoff choice, plots, and output table.
@@ -43,4 +48,3 @@ The script writes (paths are set inside the script; change them as needed):
 ## Reference
 
 Code will be described in more detail upon submission of the associated paper.
-
